@@ -1,7 +1,7 @@
-教程网址
+教程网址：http://www.pythondoc.com/flask-mega-tutorial/
 一、安装 Flask
 1、创建项目目录：
-mkdir mkcrolog
+mkdir flask
 2、创建python环境
 python -m venv flask
 3、安装flask
@@ -16,6 +16,7 @@ $ flask\Scripts\pip install flask-wtf
 $ flask\Scripts\pip install flask-babel
 $ flask\Scripts\pip install guess_language
 $ flask\Scripts\pip install flipflop
+
 $ flask\Scripts\pip install coverage
 4、创建项目结构
 创建应用程序基本的文件结构:
@@ -23,3 +24,29 @@ mkdir app
 mkdir app/static
 mkdir app/templates
 mkdir tmp
+
+二 模板
+1 模板从天而降：实现前后端分离
+如果你能够保持你的应用程序与网页的布局或者界面逻辑上是分开的，这样不是显得更加容易组织？难道你不觉得是这样吗？你甚至可以聘请一个网页设计师来设计一个杀手级的网页而你专注于 Python 编码。模板可以帮助实现这种分离。
+在标准HTML页面中使用块引用{{ … }} 动态变量即可将服务器传输的内容放到浏览器
+<html>
+  <head>
+    <title>{{title}} - microblog</title>
+  </head>
+  <body>
+      <h1>Hello, {{user.nickname}}!</h1>
+  </body>
+</html>
+
+服务端通过render_template对象返回前端，即可实现前后端数据传输
+from flask import render_template
+from app import app
+
+@app.route('/')
+@app.route('/index')
+def index():
+    user = { 'nickname': 'Miguel' } # fake user
+    return render_template("index.html",
+        title = 'Home',
+        user = user)
+
